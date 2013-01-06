@@ -1,0 +1,24 @@
+{
+  "name": "briqs",
+  "description": "Experimental application framework",
+  "version": "0.0.2",
+  "author": "Jean-Claude Wippler <jc@wippler.nl>",
+  "preferGlobal": true,
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "dependencies": {
+    "socketstream": "~0.3.2",
+    "ss-coffee": "~0.1.2",
+    "ss-jade": "~0.1.3",
+    "ss-stylus": "~0.1.5"
+  },
+  "devDependencies": {
+    "mocha": "~1.7.4",
+    "sinon": "~1.5.2",
+    "should": "~1.2.1"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}
