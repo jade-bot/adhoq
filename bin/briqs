@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var cli = require('../cli'),
+    program = require('commander'),
+    package = require('../package')
+
+program
+  .usage('...')
+  .version(package.version)
+  .parse(process.argv)
+  
+require(__dirname + '/../cli.js').process(program)
