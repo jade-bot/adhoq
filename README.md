@@ -1,6 +1,6 @@
 # Briqs
 
-An application framework for [HomeMon](https://github.com/jcw/homemon.git).
+An application framework for [HouseMon](https://github.com/jcw/housemon.git).
 
 # Install
 
