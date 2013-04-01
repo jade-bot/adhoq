@@ -9,7 +9,7 @@ Install [Node.js](http://nodejs.org/), then:
     npm install -g adhoq
     adhoq --help
     
-# Test
+# Run tests
     
     npm test
 

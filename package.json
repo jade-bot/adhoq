@@ -19,7 +19,7 @@
     "sinon": "~1.5.2"
   },
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha"
   },
   "bin": {
     "adhoq": "./bin/adhoq"
