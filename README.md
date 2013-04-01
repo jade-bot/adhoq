@@ -6,8 +6,14 @@ Experimental website framework.
 
 Install [Node.js](http://nodejs.org/), then:
 
-    $ npm install -g adhoq
-    $ adhoq --help
+    npm install -g adhoq
+    adhoq --help
+    
+# Test
+    
+    npm test
+
+[![Build Status](https://secure.travis-ci.org/jcw/adhoq.png)](http://travis-ci.org/jcw/adhoq)
     
 # License
 
