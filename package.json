@@ -13,12 +13,13 @@
     "commander": "~1.1.1"
   },
   "devDependencies": {
-    "mocha": "~1.7.4",
-    "sinon": "~1.5.2",
-    "should": "~1.2.1"
+    "coffee-script": "~1.6.2",
+    "mocha": "~1.8.2",
+    "chai": "~1.4.2",
+    "sinon": "~1.5.2"
   },
   "scripts": {
-    "test": "mocha -w"
+    "test": "mocha -R spec"
   },
   "bin": {
     "adhoq": "./bin/adhoq"
