@@ -9,4 +9,4 @@ program
   .version(package.version)
   .parse(process.argv)
   
-require(__dirname + '/../cli.js').process(program)
+cli.process(program)

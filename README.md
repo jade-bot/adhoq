@@ -1,14 +1,14 @@
-# Briqs
+# AdHoq
 
-An application framework for [HouseMon](https://github.com/jcw/housemon.git).
+Experimental website framework.
 
 # Install
 
-Install [Node.js](http://nodejs.org), then:
+Install [Node.js](http://nodejs.org/), then:
 
-    $ npm install -g briqs
-    $ briqs --help
+    $ npm install -g adhoq
+    $ adhoq --help
     
 # License
 
-<http://opensource.org/licenses/MIT>
+[MIT](http://opensource.org/licenses/MIT)

@@ -1,17 +1,13 @@
 {
-  "name": "briqs",
-  "description": "Experimental application framework",
-  "version": "0.0.2",
+  "name": "adhoq",
+  "description": "Experimental websitek framework",
+  "version": "0.0.3",
   "author": "Jean-Claude Wippler <jc@wippler.nl>",
   "preferGlobal": true,
   "engines": {
-    "node": ">= 0.6.0"
+    "node": ">= 0.10.0"
   },
   "dependencies": {
-    "socketstream": "~0.3.2",
-    "ss-coffee": "~0.1.2",
-    "ss-jade": "~0.1.3",
-    "ss-stylus": "~0.1.5",
     "commander": "~1.1.1"
   },
   "devDependencies": {
@@ -23,6 +19,6 @@
     "start": "node app.js"
   },
   "bin": {
-    "briqs": "./bin/briqs"
+    "adhoq": "./bin/adhoq"
   }
 }
