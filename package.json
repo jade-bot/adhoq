@@ -1,8 +1,10 @@
 {
   "name": "adhoq",
-  "description": "Experimental websitek framework",
   "version": "0.0.3",
+  "description": "Experimental website framework",
   "author": "Jean-Claude Wippler <jc@wippler.nl>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
   "preferGlobal": true,
   "engines": {
     "node": ">= 0.10.0"
@@ -16,9 +18,13 @@
     "should": "~1.2.1"
   },
   "scripts": {
-    "start": "node app.js"
+    "test": "mocha -w"
   },
   "bin": {
     "adhoq": "./bin/adhoq"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jcw/adhoq.git"
   }
 }
