@@ -35,3 +35,6 @@ describe 'Smoke test', ->
       stub.called.should.be.false
       @clock.tick 2500
       stub.called.should.be.true
+
+  it 'should be the right version', ->
+    require('../package').version.should.equal '0.0.3'

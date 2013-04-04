@@ -22,7 +22,7 @@
     "test": "mocha"
   },
   "bin": {
-    "adhoq": "./bin/adhoq"
+    "adhoq": "bin/adhoq"
   },
   "repository": {
     "type": "git",
