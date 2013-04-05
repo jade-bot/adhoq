@@ -22,9 +22,12 @@ module.exports = (port = 3333) ->
       debug 'send %s', data, sid
       socket.send data
 
-  watcher = fs.watch CLIENT_DIR, {}, (event, filename) ->
-    debug 'file %s', event, filename
-    app.sendToAll (if filename.match /\.(css|styl)$/i then 'U' else 'R')
+  try
+    watcher = fs.watch CLIENT_DIR, {}, (event, filename) ->
+      debug 'file %s', event, filename
+      app.sendToAll (if filename.match /\.(css|styl)$/i then 'U' else 'R')
+  catch err
+    fail err, 'ENOENT', 'Directory not found: %s', CLIENT_DIR
   
   server.on 'connection', (socket) ->
     sid = socket.id
@@ -54,3 +57,8 @@ module.exports = (port = 3333) ->
   app.on 'ws:message', (socket, msg) ->
     console.log 'message:', msg
     socket.sendMessage "echo #{msg}"
+
+fail = (err, code, args...) ->
+  console.error args...
+  console.error err  unless err.code is code
+  process.exit 1
