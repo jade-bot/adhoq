@@ -1,3 +1,4 @@
+!!!
 html
   head
     meta(http-equiv='Content-type', content='text/html; charset=utf-8')
@@ -6,8 +7,10 @@ html
     script(src='/engine.io.js')
     script(src='/reload.js')
   body
-    h3 minimal-reload
-    p Open the debug console to see what's going on.
-    p
-      | Any change in the "app" directory causes the browser to automatically
-      |  reload, although in-places updates will be used for CSS files.
+    :markdown
+      ## minimal-reload
+      
+      *Open the debug console to see what's going on.*
+      
+      Any change in the `app` directory causes the browser to automatically
+      reload, with in-place updates for CSS changes.
