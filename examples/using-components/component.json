@@ -1,7 +1,7 @@
 {
-  "name": "boot",
+  "name": "main",
   "dependencies": {
     "LearnBoost/engine.io-client": "*"
   },
-  "scripts": ["index.js"]
+  "scripts": ["connect.js"]
 }

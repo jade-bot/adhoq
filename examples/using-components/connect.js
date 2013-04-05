@@ -1,7 +1,7 @@
 console.log('boot component');
 
-var eio = require('engine.io');
-var socket = new eio.Socket('ws://localhost/');
+var eio = require('engine.io'); // i.e. LearnBoost/engine.io-client
+var socket = module.exports = new eio.Socket('ws://localhost/');
 
 socket.on('open', function () {
   console.log('open!');
@@ -29,6 +29,4 @@ socket.on('open', function () {
   socket.on('close', function () {
     console.log('close!');
   });
-
-  socket.send('hello');
 });

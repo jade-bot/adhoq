@@ -5,7 +5,8 @@ html
     link(rel='stylesheet', href='/style.css')
     script(src='/build.js')
     script
-      require('boot');
+      var socket = require('main/connect');
+      socket.send('hello');
   body
     :markdown
       ## using-components
