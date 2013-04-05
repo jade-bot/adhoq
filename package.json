@@ -1,6 +1,6 @@
 {
   "name": "adhoq",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Experimental website framework",
   "author": "Jean-Claude Wippler <jc@wippler.nl>",
   "license": "MIT",
@@ -10,10 +10,13 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
-    "commander": "~1.1.1"
+    "coffee-script": "~1.6.2",
+    "commander": "~1.1.1",
+    "connect": "~2.7.4",
+    "engine.io": "~0.5.0",
+    "debug": "~0.7.2"
   },
   "devDependencies": {
-    "coffee-script": "~1.6.2",
     "mocha": "~1.8.2",
     "chai": "~1.4.2",
     "sinon": "~1.5.2"
