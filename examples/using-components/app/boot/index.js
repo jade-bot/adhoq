@@ -1,9 +1,14 @@
-console.log('haha');
+console.log('boot component');
+
 var eio = require('engine.io');
 var socket = new eio.Socket('ws://localhost/');
+
 socket.on('open', function () {
   console.log('open!');
+
   socket.on('message', function (data) {
+    // first char is dispatch type for incoming websocket messages
+    //  M = message, R = reload page, U = update CSS
     if (data[0] == 'M') {
       console.log('message:', data.substr(1));
     } else if (data == 'R') {
@@ -20,8 +25,10 @@ socket.on('open', function () {
       }
     }
   });
+
   socket.on('close', function () {
     console.log('close!');
   });
+
   socket.send('hello');
 });
