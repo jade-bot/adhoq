@@ -1,3 +1,5 @@
+# Minimal reload
+
 Run as:
 
     ../../bin/adhoq run
