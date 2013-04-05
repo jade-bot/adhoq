@@ -3,12 +3,14 @@ html
   head
     title Using components
     link(rel='stylesheet', href='/style.css')
-    script(src='/build.js')
-    script
-      var socket = require('main/connect');
-      socket.send('hello');
   body
     :markdown
       ## using-components
 
       *Open the debug console to see what's going on.*
+
+    //- boilerplate code to set up the websocket with live reload
+    script(src='/build.js')
+    script
+      window.ws = require('main/connect');
+      ws.send('hello');

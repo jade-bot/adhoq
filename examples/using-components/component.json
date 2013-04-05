@@ -2,6 +2,5 @@
   "name": "main",
   "dependencies": {
     "LearnBoost/engine.io-client": "*"
-  },
-  "scripts": ["connect.js"]
+  }
 }
