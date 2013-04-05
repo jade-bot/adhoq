@@ -2,8 +2,6 @@ Builder = require 'component-builder'
 debug = require('debug') 'adhoq:combiner'
 
 connectScript = '''
-  console.log('boot component');
-
   var eio = require('engine.io'); // i.e. LearnBoost/engine.io-client
   var socket = module.exports = new eio.Socket('ws://localhost/');
 
@@ -42,12 +40,12 @@ module.exports = (dir) ->
     
     builder = new Builder(dir)
     
+    # see https://github.com/component/builder.js/issues/72
     builder.on 'config', ->
       builder.addFile 'scripts', 'connect.js', connectScript 
 
     builder.build (err, obj) ->
-      console.log err
-      return next() if err
+      throw err  if err
 
       sizes = {}
       sizes[k] = v.length  for k,v of obj
