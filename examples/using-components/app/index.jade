@@ -12,5 +12,5 @@ html
     //- boilerplate code to set up the websocket with live reload
     script(src='/build.js')
     script
-      window.ws = require('main/connect');
-      ws.send('hello');
+      var socket = require('main/connect');
+      socket.send('hello');
