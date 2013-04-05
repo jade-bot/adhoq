@@ -4,6 +4,7 @@ engine = require 'engine.io'
 debug = require('debug') 'adhoq:run'
 fs = require 'fs'
 converter = require './converter'
+combiner = require './combiner'
 
 CLIENT_DIR = './app'  # this gets served and is watched for changes
 
@@ -11,6 +12,7 @@ module.exports = (port = 3333) ->
   app = connect()
 
   app.use connect.logger 'dev'
+  app.use '/build.js', combiner CLIENT_DIR
   app.use converter CLIENT_DIR
   app.use connect.static CLIENT_DIR
 

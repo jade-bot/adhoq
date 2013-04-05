@@ -1,0 +1,6 @@
+{
+  "name": "using-components",
+  "dependencies": {
+    "LearnBoost/engine.io-client": "*"
+  }
+}
