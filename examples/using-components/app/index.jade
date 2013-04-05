@@ -4,7 +4,8 @@ html
     title Using components
     link(rel='stylesheet', href='/style.css')
     script(src='/build.js')
-    script(src='/reload.js')
+    script
+      require('boot');
   body
     :markdown
       ## using-components

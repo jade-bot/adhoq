@@ -1,6 +1,7 @@
 {
-  "name": "using-components",
+  "name": "boot",
   "dependencies": {
     "LearnBoost/engine.io-client": "*"
-  }
+  },
+  "scripts": ["index.js"]
 }

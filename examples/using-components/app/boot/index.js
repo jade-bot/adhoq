@@ -1,4 +1,5 @@
-var eio = require('LearnBoost-engine.io-client');
+console.log('haha');
+var eio = require('engine.io');
 var socket = new eio.Socket('ws://localhost/');
 socket.on('open', function () {
   console.log('open!');
