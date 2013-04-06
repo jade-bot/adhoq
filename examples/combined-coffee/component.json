@@ -1,0 +1,5 @@
+{
+  "name": "combined-coffee",
+  "local": ["boot"],
+  "paths": ["app"]
+}

@@ -1,0 +1,14 @@
+!!!
+html
+  head
+    title Combined coffee
+    link(rel='stylesheet', href='/style.css')
+  body
+    :markdown
+      ## combined-coffee
+
+      *Open the debug console to see what's going on.*
+
+    //- trigger the builder and run the boot component
+    script(src='/build.js')
+    script require('boot')

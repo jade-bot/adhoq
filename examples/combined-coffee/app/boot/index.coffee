@@ -1,8 +1,11 @@
-socket = new eio.Socket("ws://localhost/")
+console.log "Hello from the boot/index.coffee component"
+
+eio = require "engine.io"  # i.e. LearnBoost/engine.io-client
+socket = module.exports = new eio.Socket("ws://localhost/")
 
 socket.on "open", ->
   console.log "open!"
-
+  
   socket.on "message", (data) ->
     # first char is dispatch type for incoming websocket messages
     #  M = message, R = reload page, U = update CSS
@@ -21,4 +24,3 @@ socket.on "open", ->
     console.log "close!"
 
   socket.send "hello"
-
