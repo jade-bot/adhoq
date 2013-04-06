@@ -15,3 +15,8 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
   
   [1]: https://github.com/component/component#readme
   [2]: https://github.com/component/builder.js#readme
+
+* **angular-demo**
+  A variant, which ties into components from the Briqs project - AngulraJS in
+  this case. It's just a big JavaScript file, turned into a component, really.
+  The `paths` entries in the top-level `component.json` file have been extended.

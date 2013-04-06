@@ -20,7 +20,7 @@ socket.on('open', function () {
       for (var i = 0; i < elems.length; ++i) {
         var e = elems[i];
         if (e.href && e.rel.match(/stylesheet/i)) {
-          e.href = e.href.replace(/\\?.+/, '') + '?' + Date.now();
+          e.href = e.href.replace(/\?.+/, '') + '?' + Date.now();
         }
       }
     }

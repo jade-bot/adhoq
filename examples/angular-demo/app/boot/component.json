@@ -6,6 +6,5 @@
   },
   "local": [
     "angular"
-  ],
-  "paths": ["../../node_modules/briqs"]
+  ]
 }
