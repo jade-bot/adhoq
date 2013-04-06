@@ -41,18 +41,6 @@ module.exports = (root) ->
             res.setHeader 'Content-Length', Buffer.byteLength html
             res.end html
         
-    # convert Stylus to CSS if possible
-    else if dest.match /\.css/i
-      src = dest.replace /css$/, 'styl'
-      fs.readFile src, 'utf8', (err, data) ->
-        return next()  if err
-        stylus.render data, { filename: src }, (err, css) ->
-          return next()  if err
-          debug 'css', dest
-          res.setHeader 'Content-Type', 'text/css'
-          res.setHeader 'Content-Length', Buffer.byteLength css
-          res.end css
-          
     # convert CoffeeScript to JavaScript if possible
     else if dest.match /\.js/i
       src = dest.replace /js$/, 'coffee'

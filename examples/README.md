@@ -26,14 +26,14 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
   that *per-file* on-the-fly translation from CoffeeScript to JavaScript works.
 
 * **combined-coffee**  
-  A more advanced use of CoffeeScript, whereby they get compiled and combined
+  A more advanced use of CoffeeScript, where scripts get compiled and combined
   during the combination phase for `/build.js` requests. The result is that
   now any script can be a `.coffee` file. Note that they still must be listed as
   `.js` in the `component.json` descriptions, otherwise they won't be compiled.
 
 * **foundation-demo**  
   [Foundation][F] is a CSS framework with lots of design options. This uses the
-  [enricomarino/foundation][E] component and demonstrate how easy it is to
+  [enricomarino/foundation][E] component and demonstrates how easy it is to
   include code and styles from 3rd parties. See the growing [component list][L].
   
   [F]: https://github.com/zurb/foundation
