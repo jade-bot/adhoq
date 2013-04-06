@@ -1,0 +1,22 @@
+!!!
+html(ng-app)
+  head
+    title Angular demo {{ name.toUpperCase() }}
+    link(rel='stylesheet', href='/style.css')
+  body
+    :markdown
+      ## angular-demo
+
+      *Check the window title as you type...*
+
+    input(type='text', ng-model='name', placeholder='Your name...')
+    h1 Hello {{ name }}!
+    
+    //- boilerplate code to set up the websocket with live reload
+    script(src='/build.js')
+    script
+      var socket = require('main/connect');
+      socket.send('hello');
+    //- other components can now be loaded from main using require
+    script
+      require('main');

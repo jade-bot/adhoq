@@ -1,0 +1,11 @@
+{
+  "name": "boot",
+  "scripts": ["index.js"],
+  "dependencies": {
+    "LearnBoost/engine.io-client": "*"
+  },
+  "local": [
+    "angular"
+  ],
+  "paths": ["../../node_modules/briqs"]
+}

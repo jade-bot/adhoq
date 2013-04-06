@@ -39,13 +39,17 @@ module.exports = (dir) ->
   (req, res, next) ->
     
     builder = new Builder(dir)
+    builder.addLookup('app');
+    builder.addLookup('node_modules/briqs');
     
     # see https://github.com/component/builder.js/issues/72
     builder.on 'config', ->
       builder.addFile 'scripts', 'connect.js', connectScript 
 
     builder.build (err, obj) ->
-      throw err  if err
+      if err
+        console.log 'build error', err
+        return next()
 
       sizes = {}
       sizes[k] = v.length  for k,v of obj
