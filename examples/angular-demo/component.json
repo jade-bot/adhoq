@@ -3,6 +3,6 @@
   "dependencies": {
     "LearnBoost/engine.io-client": "*"
   },
-  "local": ["main"],
+  "local": ["boot"],
   "paths": ["app"]
 }
