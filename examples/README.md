@@ -16,7 +16,11 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
   [1]: https://github.com/component/component#readme
   [2]: https://github.com/component/builder.js#readme
 
-* **angular-demo**
-  A variant, which ties into components from the Briqs project - AngulraJS in
+* **angular-demo**  
+  A variant which ties into components from the Briqs project - AngularJS in
   this case. It's just a big JavaScript file, turned into a component, really.
-  The `paths` entries in the top-level `component.json` file have been extended.
+  The `paths` entries in the top-level `component.json` file had to be extended.
+
+* **minimal-coffee**  
+  Changed `reload.js` to `reload.coffee` in the *minimal-reload* demo, to show
+  that *per-file* on-the-fly translation from CoffeeScript to JavaScript works.

@@ -1,6 +1,7 @@
 jade = require 'jade'
 stylus = require 'stylus'
 marked = require 'marked'
+coffee = require 'coffee-script'
 {parse} = require 'url'
 path = require 'path'
 fs = require 'fs'
@@ -17,7 +18,7 @@ module.exports = (root) ->
     dest = path.join root, parse(req.url).pathname
     dest += 'index.html'  if dest.slice(-1) is '/'
     
-    # FIXME ugly code
+    # FIXME ugly duplication in code
     
     # convert (static) Jade to HTML if possible
     if dest.match /\.html/i
@@ -48,6 +49,29 @@ module.exports = (root) ->
         stylus.render data, { filename: src }, (err, css) ->
           return next()  if err
           debug 'css', dest
+          res.setHeader 'Content-Type', 'text/css'
+          res.setHeader 'Content-Length', Buffer.byteLength css
+          res.end css
+          
+    # convert CoffeeScript to JavaScript if possible
+    else if dest.match /\.js/i
+      src = dest.replace /js$/, 'coffee'
+      fs.readFile src, 'utf8', (err, data) ->
+        return next()  if err
+        js = coffee.compile data
+        debug 'coffee', dest
+        res.setHeader 'Content-Type', 'text/js'
+        res.setHeader 'Content-Length', Buffer.byteLength js
+        res.end js
+          
+    # convert Stylus to CSS if possible
+    else if dest.match /\.css/i
+      src = dest.replace /css$/, 'styl'
+      fs.readFile src, 'utf8', (err, data) ->
+        return next()  if err
+        stylus.render data, { filename: src }, (err, css) ->
+          return next()  if err
+          debug 'styl', dest
           res.setHeader 'Content-Type', 'text/css'
           res.setHeader 'Content-Length', Buffer.byteLength css
           res.end css
