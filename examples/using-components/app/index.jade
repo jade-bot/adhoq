@@ -9,8 +9,6 @@ html
 
       *Open the debug console to see what's going on.*
 
-    //- boilerplate code to set up the websocket with live reload
+    //- trigger the builder and run the boot component
     script(src='/build.js')
-    script
-      var socket = require('main/connect');
-      socket.send('hello');
+    script require('boot')

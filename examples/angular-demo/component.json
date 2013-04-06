@@ -1,4 +1,5 @@
 {
+  "name": "angular-demo",
   "local": ["boot"],
   "paths": ["app"]
 }

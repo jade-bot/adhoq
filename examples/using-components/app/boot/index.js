@@ -32,5 +32,3 @@ socket.on('open', function () {
 });
 
 socket.send('hello');
-
-require('angular');
