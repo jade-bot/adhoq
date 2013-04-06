@@ -24,3 +24,9 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
 * **minimal-coffee**  
   Changed `reload.js` to `reload.coffee` in the *minimal-reload* demo, to show
   that *per-file* on-the-fly translation from CoffeeScript to JavaScript works.
+
+* **combined-coffee**  
+  A more advanced use of CoffeeScript, whereby they get compiled and combined
+  during the combination phase for `/build.js` requests. The result is that
+  now any script can be a `.coffee` file. Note that they still must be listed as
+  `.js` in the `component.json` descriptions, otherwise they won't be compiled.

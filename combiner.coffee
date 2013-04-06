@@ -12,15 +12,16 @@ module.exports = (dir) ->
     builder.addLookup('app');
     builder.addLookup('node_modules/briqs');
 
+    # add a hook too look for .coffee files and compile them on-the-fly
     builder.use (builder) ->
       builder.hook 'before scripts', (pkg, cb) ->
-        for file in pkg.conf.cscripts or []
-          if /\.coffee$/i.test file
+        for file in pkg.conf.scripts or []
+          if /\.js$/i.test file
             path = pkg.path file
-            if fs.existsSync path
-              js = coffee.compile fs.readFileSync path, 'utf8'
-              jsfile = file.replace /coffee$/i, 'js'
-              pkg.addFile 'scripts', jsfile, js
+            cspath = path.replace /js$/i, 'coffee'
+            if fs.existsSync cspath
+              js = coffee.compile fs.readFileSync cspath, 'utf8'
+              pkg.addFile 'scripts', file, js
         cb()
     
     builder.build (err, obj) ->

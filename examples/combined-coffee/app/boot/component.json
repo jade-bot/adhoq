@@ -1,6 +1,5 @@
 {
   "name": "boot",
-  "cscripts": ["index.coffee"],
   "scripts": ["index.js"],
   "dependencies": {
     "LearnBoost/engine.io-client": "*"
