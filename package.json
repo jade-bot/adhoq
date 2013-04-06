@@ -1,6 +1,6 @@
 {
   "name": "adhoq",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Experimental website framework",
   "author": "Jean-Claude Wippler <jc@wippler.nl>",
   "license": "MIT",
@@ -18,7 +18,8 @@
     "stylus": "~0.32.1",
     "jade": "~0.28.2",
     "marked": "~0.2.8",
-    "component-builder": "~0.6.5"
+    "component-builder": "~0.6.5",
+    "chokidar": "~0.6.2"
   },
   "devDependencies": {
     "mocha": "~1.8.2",

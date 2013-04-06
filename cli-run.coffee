@@ -2,7 +2,7 @@ connect = require 'connect'
 http = require 'http'
 engine = require 'engine.io'
 debug = require('debug') 'adhoq:run'
-fs = require 'fs'
+chokidar = require 'chokidar'
 converter = require './converter'
 combiner = require './combiner'
 
@@ -26,12 +26,10 @@ module.exports = (port = 3333) ->
       debug 'send %s', data, sid
       socket.send data
 
-  try
-    watcher = fs.watch CLIENT_DIR, {}, (event, filename) ->
-      debug 'file %s', event, filename
-      app.sendToAll (if filename.match /\.(css|styl)$/i then 'U' else 'R')
-  catch err
-    fail err, 'ENOENT', 'Directory not found: %s', CLIENT_DIR
+  watcher = chokidar.watch CLIENT_DIR
+  watcher.on 'change', (path, stats) ->
+    debug 'file change', path
+    app.sendToAll (if path.match /\.(css|styl)$/i then 'U' else 'R')
   
   server.on 'connection', (socket) ->
     sid = socket.id
@@ -62,7 +60,7 @@ module.exports = (port = 3333) ->
     console.log 'message:', msg
     socket.sendMessage "echo #{msg}"
 
-fail = (err, code, args...) ->
-  console.error args...
-  console.error err  unless err.code is code
-  process.exit 1
+# fail = (err, code, args...) ->
+#   console.error args...
+#   console.error err  unless err.code is code
+#   process.exit 1
