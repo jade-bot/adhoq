@@ -1,8 +1,4 @@
 {
-  "name": "main",
-  "dependencies": {
-    "LearnBoost/engine.io-client": "*"
-  },
   "local": ["boot"],
   "paths": ["app"]
 }

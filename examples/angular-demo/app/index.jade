@@ -12,11 +12,6 @@ html(ng-app)
     input(type='text', ng-model='name', placeholder='Your name...')
     h1 Hello {{ name }}!
     
-    //- boilerplate code to set up the websocket with live reload
+    //- trigger the builder and run the boot component
     script(src='/build.js')
-    script
-      var socket = require('main/connect');
-      socket.send('hello');
-    //- other components can now be loaded from main using require
-    script
-      require('boot');
+    script require('boot')
