@@ -8,13 +8,13 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
   and Markdown on-the-fly.
   
 * **using-components**  
-  Almost the same as minimal-reload, but now based on the [component][1]
+  Almost the same as minimal-reload, but now based on the [component][C]
   mechanism to combine files for quick download. The main trigger for this
   mechanism is when the server receives a request for `/build.js`, which
-  triggers loading the [component-builder][2] to put all the pieces together.
+  triggers loading the [component-builder][B] to put all the pieces together.
   
-  [1]: https://github.com/component/component#readme
-  [2]: https://github.com/component/builder.js#readme
+  [C]: https://github.com/component/component#readme
+  [B]: https://github.com/component/builder.js#readme
 
 * **angular-demo**  
   A variant which ties into components from the Briqs project - AngularJS in
@@ -30,3 +30,12 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
   during the combination phase for `/build.js` requests. The result is that
   now any script can be a `.coffee` file. Note that they still must be listed as
   `.js` in the `component.json` descriptions, otherwise they won't be compiled.
+
+* **foundation-demo**  
+  [Foundation][F] is a CSS framework with lots of design options. This uses the
+  [enricomarino/foundation][E] component and demonstrate how easy it is to
+  include code and styles from 3rd parties. See the growing [component list][L].
+  
+  [F]: https://github.com/zurb/foundation
+  [E]: https://github.com/enricomarino/foundation
+  [L]: https://github.com/component/component/wiki/Components

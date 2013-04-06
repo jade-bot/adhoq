@@ -1,0 +1,8 @@
+{
+  "name": "boot",
+  "scripts": ["index.js"],
+  "dependencies": {
+    "LearnBoost/engine.io-client": "*",
+    "enricomarino/foundation": "*"
+  }
+}

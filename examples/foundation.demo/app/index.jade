@@ -1,0 +1,40 @@
+!!!
+html
+  head
+    title Foundation demo
+    link(rel='stylesheet', href='/build.css')
+  body
+    nav.top-bar
+      ul.title-area
+        li.name
+          h1: a(href='https://github.com/jcw/adhoq#readme') AdHoq
+        li.toggle-topbar: a(href='#')
+      section.top-bar-section
+        ul.right
+          li: a(href='#') One
+          li: a(href='#') Two
+          li: a(href='#') Three
+
+    .row
+      .large-7.columns
+        h1 Foundation demo
+        
+        .row
+          .large-2.columns
+            a.button(href='#') One
+          .large-2.columns
+            a.tiny.button.secondary.center(href='#') Two
+          .large-8.columns
+            a.round.alert.button.disabled(href='#') Three
+        :markdown
+          This demo uses the [enricomarino/foundation][1] component.
+          
+          *Open the debug console to see what's going on.*
+          
+            [1]: https://github.com/enricomarino/foundation
+
+    //- trigger the builder and run the boot component
+    script(src='/build.js')
+    script
+      require('boot');
+      require('foundation');

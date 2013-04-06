@@ -29,6 +29,6 @@ socket.on('open', function () {
   socket.on('close', function () {
     console.log('close!');
   });
-});
 
-socket.send('hello');
+  socket.send('hello');
+});

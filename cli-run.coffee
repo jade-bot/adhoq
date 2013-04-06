@@ -12,7 +12,8 @@ module.exports = (port = 3333) ->
   app = connect()
 
   app.use connect.logger 'dev'
-  app.use '/build.js', combiner '.'
+  app.use '/build.js', combiner 'js'
+  app.use '/build.css', combiner 'css'
   app.use converter CLIENT_DIR
   app.use connect.static CLIENT_DIR
 
