@@ -2,7 +2,7 @@ connect = require 'connect'
 http = require 'http'
 engine = require 'engine.io'
 debug = require('debug') 'adhoq:run'
-chokidar = require 'chokidar'
+fs = require 'fs'
 converter = require './converter'
 combiner = require './combiner'
 
@@ -27,10 +27,21 @@ module.exports = (port = 3333) ->
       debug 'send %s', data, sid
       socket.send data
 
-  watcher = chokidar.watch CLIENT_DIR
-  watcher.on 'change', (path, stats) ->
-    debug 'file change', path
-    app.sendToAll (if path.match /\.(css|styl)$/i then 'U' else 'R')
+  # recursive directory watcher
+  watch = (path, cb) ->
+    fs.stat path, (err, stats) ->
+      unless err
+        if stats.isDirectory()
+          debug 'watch', path
+          fs.watch path, {}, cb
+          fs.readdir path, (err, files) ->
+            unless err
+              watch "#{path}/#{file}", cb  for file in files
+
+  watch CLIENT_DIR, (event, path) ->
+    if event is 'change'
+      debug 'file change', path
+      app.sendToAll (if path.match /\.(css|styl)$/i then 'U' else 'R')
   
   server.on 'connection', (socket) ->
     sid = socket.id
