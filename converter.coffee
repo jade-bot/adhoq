@@ -8,7 +8,7 @@ fs = require 'fs'
 debug = require('debug') 'adhoq:convert'
 
 # Look for requetsts which can be satsified by translating known formats.
-# Currently implemented for .jade / .md -> .html and .styl -> .css
+# Handles .jade / .md -> .html, .coffee -> .js, and .styl -> .css
 
 module.exports = (root) ->
   
@@ -17,52 +17,36 @@ module.exports = (root) ->
     
     dest = path.join root, parse(req.url).pathname
     dest += 'index.html'  if dest.slice(-1) is '/'
+    src = null
     
-    # FIXME ugly duplication in code
+    trySuffix = (from, to, match, nomatch) ->
+      len = to.length
+      if to is dest.slice -len
+        src = dest.slice(0, -len) + from
+        fs.readFile src, 'utf8', (err, data) ->
+          if err then nomatch() else match data
+      else
+        nomatch()
     
-    # convert (static) Jade to HTML if possible
-    if dest.match /\.html/i
-      src = dest.replace /html$/, 'jade'
-      fs.readFile src, 'utf8', (err, data) ->
-        if not err
-          debug 'jade', dest
-          html = jade.compile(data, filename: src)()
-          res.setHeader 'Content-Type', 'text/html'
-          res.setHeader 'Content-Length', Buffer.byteLength html
-          res.end html
-        else
-          # convert Markdown to HTML if possible
-          src = dest.replace /html$/, 'md'
-          fs.readFile src, 'utf8', (err, data) ->
-            return next()  if err
-            debug 'markdown', dest
-            html = marked(data)
-            res.setHeader 'Content-Type', 'text/html'
-            res.setHeader 'Content-Length', Buffer.byteLength html
-            res.end html
-        
-    # convert CoffeeScript to JavaScript if possible
-    else if dest.match /\.js/i
-      src = dest.replace /js$/, 'coffee'
-      fs.readFile src, 'utf8', (err, data) ->
-        return next()  if err
-        js = coffee.compile data
-        debug 'coffee', dest
-        res.setHeader 'Content-Type', 'text/js'
-        res.setHeader 'Content-Length', Buffer.byteLength js
-        res.end js
-          
-    # convert Stylus to CSS if possible
-    else if dest.match /\.css/i
-      src = dest.replace /css$/, 'styl'
-      fs.readFile src, 'utf8', (err, data) ->
-        return next()  if err
-        stylus.render data, { filename: src }, (err, css) ->
-          return next()  if err
-          debug 'styl', dest
-          res.setHeader 'Content-Type', 'text/css'
-          res.setHeader 'Content-Length', Buffer.byteLength css
-          res.end css
-          
-    else
-      next()
+    sendResult = (tag, mimetype, text) ->
+      debug tag, dest
+      res.setHeader 'Content-Type', mimetype
+      res.setHeader 'Content-Length', Buffer.byteLength text
+      res.end text
+    
+    trySuffix '.jade', '.html', (data) ->
+      html = jade.compile(data, filename: src)()
+      sendResult 'Jade', 'text/html', html
+    , ->
+      trySuffix '.md', '.html', (data) ->
+        sendResult 'Markdown', 'text/html', marked data
+      , ->
+        trySuffix '.coffee', '.js', (data) ->
+          sendResult 'CoffeeScript', 'text/js', coffee.compile data
+        , ->
+          trySuffix '.styl', '.css', (data) ->
+            stylus.render data, { filename: src }, (err, css) ->
+              if err then next() else
+                sendResult 'Stylus', 'text/css', css
+          , ->
+            next()
