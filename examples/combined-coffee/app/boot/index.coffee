@@ -29,9 +29,7 @@ socket.on 'close', ->
   # odd but useful: close events also fire on failed reconnects
   socket.emit 'disconnect'  unless delay
   delay += 1000  if delay < 10000
-  setTimeout ->
-    socket.open()
-  , delay
+  setTimeout (-> socket.open()), delay
 
 socket.on 'connect', ->
   socket.send 'hello'
