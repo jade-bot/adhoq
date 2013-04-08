@@ -1,0 +1,11 @@
+{
+  "name": "triple-play",
+  "version": "0.0.1",
+  "description": "TBD",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "mocha"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}

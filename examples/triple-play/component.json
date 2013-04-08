@@ -1,0 +1,9 @@
+{
+  "name": "triple-play",
+  "local": ["boot"],
+  "paths": [
+    ".",
+    "app",
+    "../../node_modules/briqs"
+  ]
+}

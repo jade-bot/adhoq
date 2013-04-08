@@ -39,3 +39,8 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
   [F]: https://github.com/zurb/foundation
   [E]: https://github.com/enricomarino/foundation
   [L]: https://github.com/component/component/wiki/Components
+
+* **triple-play**  
+  This demo combines all of the above in a single project: the AngularJS client-
+  side app framework, the Foundation CSS framework, and on-the-fly compilation
+  of CoffeeScript (.coffee), Jade (.jade), and Stylus (.styl) files.
