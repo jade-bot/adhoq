@@ -1,5 +1,5 @@
 program = require 'commander'
-{version} = require './package'
+{version} = require '../package'
 
 program
   .version("AdHoq #{version}")

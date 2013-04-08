@@ -4,7 +4,5 @@
   "dependencies": {
     "LearnBoost/engine.io-client": "*"
   },
-  "local": [
-    "angular"
-  ]
+  "local": ["angular"]
 }

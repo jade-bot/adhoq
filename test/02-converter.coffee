@@ -1,4 +1,4 @@
-converter = require '../converter'
+converter = require '../src/converter'
 
 describe 'converter', ->
   it 'should be a function', ->

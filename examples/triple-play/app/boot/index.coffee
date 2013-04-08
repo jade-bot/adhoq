@@ -17,8 +17,7 @@ socket.on 'message', (data) ->
       window.location.reload true
     when 'U'
       console.log 'update CSS'
-      elems = document.getElementsByTagName 'link'
-      for e in elems 
+      for e in document.getElementsByTagName 'link'
         if e.href and /stylesheet/i.test e.rel
           href = e.href.replace /\?.*/, ''
           e.href = "#{href}?#{Date.now()}"

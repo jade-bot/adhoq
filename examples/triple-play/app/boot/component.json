@@ -5,7 +5,5 @@
     "LearnBoost/engine.io-client": "*",
     "enricomarino/foundation": "*"
   },
-  "local": [
-    "angular"
-  ]
+  "local": ["angular"]
 }
