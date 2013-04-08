@@ -5,19 +5,23 @@ socket = module.exports = new eio.Socket('ws://localhost/')
 
 socket.on 'message', (data) ->
   # first char is dispatch type for incoming websocket messages
-  #  M = message, R = reload page, U = update CSS
-  if data[0] is 'M'
-    console.log 'message:', data.substr(1)
-  else if data is 'R'
-    console.log 'reload page'
-    window.location.reload true
-  else if data is 'U'
-    console.log 'update CSS'
-    elems = document.getElementsByTagName 'link'
-    for e in elems 
-      if e.href and /stylesheet/i.test e.rel
-        href = e.href.replace /\?.*/, ''
-        e.href = "#{href}?#{Date.now()}"
+  #  J = JSON request, M = message, R = reload page, U = update CSS
+  msg = data.substr 1
+  switch data[0]
+    when 'J'
+      socket.emit 'request', JSON.parse msg
+    when 'M'
+      console.log 'message:', msg
+    when 'R'
+      console.log 'reload page'
+      window.location.reload true
+    when 'U'
+      console.log 'update CSS'
+      elems = document.getElementsByTagName 'link'
+      for e in elems 
+        if e.href and /stylesheet/i.test e.rel
+          href = e.href.replace /\?.*/, ''
+          e.href = "#{href}?#{Date.now()}"
 
 delay = null  # this will be > 0 while attempting reconnects
 

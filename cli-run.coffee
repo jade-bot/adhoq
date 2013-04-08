@@ -54,7 +54,12 @@ module.exports = (port = 3333) ->
     app.emit 'ws:connect', socket
 
     socket.on 'message', (data) ->
-      app.emit 'ws:message', socket, data
+      try # ignore errors
+        json = JSON.parse data  if data[0] is '['
+      if json
+        app.emit 'ws:request', socket, json
+      else
+        app.emit 'ws:message', socket, data
 
     socket.on 'close', ->
       debug 'disconnect', sid
