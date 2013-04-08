@@ -10,8 +10,8 @@ app = module.exports = connect()
 
 app.start = (appDir, port) ->
   app.use connect.logger 'dev'
-  app.use '/build.js', combiner 'js'
-  app.use '/build.css', combiner 'css'
+  app.use '/build.js', combiner.build 'js'
+  app.use '/build.css', combiner.build 'css'
   app.use converter appDir
   app.use connect.static appDir
 
@@ -45,6 +45,7 @@ app.start = (appDir, port) ->
   watch appDir, (event, path) ->
     if event is 'change'
       debug 'file change', path
+      combiner.invalidate()
       sendToAll (if path.match /\.(css|styl)$/i then 'U' else 'R')
   
   server.on 'connection', (socket) ->
