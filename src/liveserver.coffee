@@ -45,8 +45,9 @@ app.start = (appDir, port) ->
   watch appDir, (event, path) ->
     if event is 'change'
       debug 'file change', path
-      combiner.invalidate()
-      sendToAll (if path.match /\.(css|styl)$/i then 'U' else 'R')
+      unless /\.(html|jade)$/.test path
+        combiner.invalidate()
+      sendToAll (if /\.(css|styl)$/.test path then 'U' else 'R')
   
   server.on 'connection', (socket) ->
     sid = socket.id
