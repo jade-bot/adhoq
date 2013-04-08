@@ -1,14 +1,48 @@
 Builder = require 'component-builder'
 fs = require 'fs'
 coffee = require 'coffee-script'
+{EventEmitter} = require 'events'
 debug = require('debug') 'adhoq:combiner'
 
-cachedBuild = null
+cache = new EventEmitter
 
-buildOnce = (cb) ->
-  return cb cachedBuild  if cachedBuild
+exports.invalidate = ->
+  cache.build = null
 
-  debug 'new build'
+exports.build = (type) ->
+  # type must be either "js" or "css"
+
+  (req, res, next) ->
+
+    # Fairly convoluted logic: to avoid redundant builds when multiple requests
+    # come in, we tag the build as "in progress" (by setting cache.build to {})
+    # and postpone all replies until the builder fires off a cache "done" event.
+
+    cache.once 'done', ->
+      if type is 'js'
+        res.setHeader 'Content-Type', 'application/javascript'
+        out = cache.build.require + cache.build.js
+      else
+        res.setHeader 'Content-Type', 'text/css'
+        out = cache.build.css
+      res.setHeader 'Content-Length', Buffer.byteLength out
+      res.end out
+
+    if cache.build
+      if cache.build[type]
+        cache.emit 'done'
+      else
+        # if empty object, then the build is in progress
+    else
+      cache.build = {}
+      buildAll (obj) ->
+        if obj
+          cache.build = obj
+          cache.emit 'done'
+        else
+          next()
+
+buildAll = (cb) ->
   builder = new Builder('.')
   
   # TODO get these paths from component.json or make them configurable
@@ -36,25 +70,4 @@ buildOnce = (cb) ->
     sizes[k] = v.length  for k,v of obj
     debug "sizes", sizes
 
-    cachedBuild = obj
-    cb cachedBuild
-
-exports.invalidate = ->
-  cachedBuild = null
-
-exports.build = (type) ->
-  # type must be either "js" or "css"
-
-  (req, res, next) ->
-    buildOnce (obj) ->
-      if obj
-        if type is 'js'
-          out = obj.require + obj.js
-        else
-          out = obj[type]
-        mime = { js: 'application/javascript', css: 'text/css' }[type]
-        res.setHeader 'Content-Type', mime
-        res.setHeader 'Content-Length', Buffer.byteLength out
-        res.end out
-      else
-        next()
+    cb obj
