@@ -2,45 +2,57 @@ Builder = require 'component-builder'
 fs = require 'fs'
 coffee = require 'coffee-script'
 {EventEmitter} = require 'events'
+crypto = require 'crypto'
 debug = require('debug') 'adhoq:combiner'
 
 cache = new EventEmitter
 
 exports.invalidate = ->
-  cache.build = null
+  cache.data = null
 
 exports.build = (type) ->
   # type must be either "js" or "css"
 
   (req, res, next) ->
-
     # Fairly convoluted logic: to avoid redundant builds when multiple requests
-    # come in, we tag the build as "in progress" (by setting cache.build to {})
+    # come in, we tag the build as "in progress" (by setting cache.data to {})
     # and postpone all replies until the builder fires off a cache "done" event.
 
-    cache.once 'done', ->
-      if type is 'js'
-        res.setHeader 'Content-Type', 'application/javascript'
-        out = cache.build.require + cache.build.js
-      else
-        res.setHeader 'Content-Type', 'text/css'
-        out = cache.build.css
-      res.setHeader 'Content-Length', Buffer.byteLength out
-      res.end out
+    cache.once 'done', (data) ->
+      return next()  unless data
 
-    if cache.build
-      if cache.build[type]
-        cache.emit 'done'
+      {text,etag,mime} = data[type]
+      res.setHeader 'Content-Type', mime
+
+      # use etags to avoid sending (and re-rendering) unmodified build results
+      debug 'etag %s', type, etag
+      if req.headers?['if-none-match'] is etag
+        res.statusCode = 304
+        res.end()
       else
-        # if empty object, then the build is in progress
+        res.setHeader 'ETag', etag
+        res.setHeader 'Content-Length', Buffer.byteLength text
+        res.end text
+
+    # handle the three different cache states: done, in progress, and fresh
+    if cache.data
+      if cache.data[type]
+        cache.emit 'done', cache.data
+      # else empty object, i.e. the build is in progress
     else
-      cache.build = {}
-      buildAll (obj) ->
-        if obj
-          cache.build = obj
-          cache.emit 'done'
+      buildAll (js, css) ->
+        if js and css
+          cache.data =
+            js: { text: js,  etag: hash(js), mime: 'application/javascript' }
+            css: { text: css, etag: hash(css), mime: 'text/css' }
         else
-          next()
+          cache.data = null
+        cache.emit 'done', cache.data
+
+hash = (data) ->
+  md5 = crypto.createHash 'md5'
+  md5.update data
+  JSON.stringify md5.digest 'hex'
 
 buildAll = (cb) ->
   builder = new Builder('.')
@@ -70,4 +82,4 @@ buildAll = (cb) ->
     sizes[k] = v.length  for k,v of obj
     debug "sizes", sizes
 
-    cb obj
+    cb obj.require + obj.js, obj.css
