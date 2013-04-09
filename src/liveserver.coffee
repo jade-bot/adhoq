@@ -1,10 +1,10 @@
 connect = require 'connect'
 http = require 'http'
 engine = require 'engine.io'
-fs = require 'fs'
 converter = require './converter'
 combiner = require './combiner'
-debug = require('debug') 'adhoq:run'
+{watch} = require './utils'
+debug = require('debug') 'adhoq:liveserver'
 
 app = module.exports = connect()
 
@@ -25,17 +25,6 @@ app.start = (appDir, port) ->
     for sid, socket of app.connections
       debug 'send %s', data, sid
       socket.send data
-
-  # recursive directory watcher
-  watch = (path, cb) ->
-    fs.stat path, (err, stats) ->
-      unless err
-        if stats.isDirectory()
-          debug 'watch', path
-          fs.watch path, {}, cb
-          fs.readdir path, (err, files) ->
-            unless err
-              watch "#{path}/#{file}", cb  for file in files
 
   watch appDir, (event, path) ->
     if event is 'change'
