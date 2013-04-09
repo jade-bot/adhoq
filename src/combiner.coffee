@@ -40,10 +40,11 @@ exports.build = (type) ->
         cache.emit 'done', cache.data
       # else empty object, i.e. the build is in progress
     else
-      buildAll (js, css) ->
+      cache.data = {}
+      fullBuild (js, css) ->
         if js and css
           cache.data =
-            js: { text: js,  etag: hash(js), mime: 'application/javascript' }
+            js: { text: js, etag: hash(js), mime: 'application/javascript' }
             css: { text: css, etag: hash(css), mime: 'text/css' }
         else
           cache.data = null
@@ -54,7 +55,7 @@ hash = (data) ->
   md5.update data
   JSON.stringify md5.digest 'hex'
 
-buildAll = (cb) ->
+exports.fullBuild = fullBuild = (cb) ->
   builder = new Builder('.')
   
   # TODO get these paths from component.json or make them configurable
