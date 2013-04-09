@@ -31,6 +31,9 @@
   "bin": {
     "adhoq": "bin/adhoq"
   },
+  "homepage": [
+    "https://github.com/jcw/adhoq"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/jcw/adhoq.git"
