@@ -27,7 +27,7 @@ program
   .command('build')
   .description('Build a static version of the site')
   .action (env) ->
-    console.warn 'not yet'
+    require('./cli-build') program.args...
 
 program
   .command('info')
