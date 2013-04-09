@@ -44,3 +44,15 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
   This demo combines all of the above in a single project: the AngularJS client-
   side app framework, the Foundation CSS framework, and on-the-fly compilation
   of CoffeeScript (.coffee), Jade (.jade), and Stylus (.styl) files.
+
+* **socket-server**  
+  For production, another scneario is to use a *WebSocket-only* server and serve
+  everything else as static data off the file system, Apache, Nginx, a CDN, etc.
+  The demo can be launched in this new "semi-static" mode using these commands:
+  
+        adhoq build           (to translate, combine, and minify the out/ area)
+        open out/index.html   (on Mac, i.e. browse the site as static files)
+        node server           (note that adhoq is no longer involved here)
+
+  When launched using `adhoq run` for development, the server will be launched as child process, with adhoq sitting in between to handle live reloading.
+  The `server/coffee.main` startup sets itself up accordingly, using WS or IPC.

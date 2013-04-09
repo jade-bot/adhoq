@@ -2,17 +2,17 @@ console.log 'Hello from the boot/index.coffee component'
 
 eio = require 'engine.io'  # i.e. LearnBoost/engine.io-client
 url = document.URL.replace /.*?:/, 'ws:'
+if url.slice(0, 6) is 'ws:///'
+  url = 'ws://localhost:3333/' # FIXME temporary hack
 socket = module.exports = new eio.Socket(url)
 
 socket.on 'message', (data) ->
   # first char is dispatch type for incoming websocket messages
-  #  J = JSON request, M = message, R = reload page, U = update CSS
+  #  M: message, R: reload page, U: update CSS, else treat as JSON request
   msg = data.substr 1
   switch data[0]
-    when 'J'
-      socket.emit 'request', JSON.parse msg
     when 'M'
-      console.log 'message:', msg
+      console.log 'server msg:', msg
     when 'R'
       console.log 'reload page'
       window.location.reload true
@@ -22,6 +22,8 @@ socket.on 'message', (data) ->
         if e.href and /stylesheet/i.test e.rel
           href = e.href.replace /\?.*/, ''
           e.href = "#{href}?#{Date.now()}"
+    else
+      socket.emit 'request', JSON.parse msg
 
 delay = null  # this will be > 0 while attempting reconnects
 
