@@ -37,4 +37,4 @@ describe 'Smoke test', ->
       stub.called.should.be.true
 
   it 'should be the right version', ->
-    require('../package').version.should.equal '0.4.1'
+    require('../package').version.should.equal '0.4.2'
