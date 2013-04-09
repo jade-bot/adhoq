@@ -20,16 +20,11 @@ app.start = (appDir, port) ->
   
   app.connections = {}
   
-  sendToAll = (data) ->
+  app.broadcast = (args...) ->
+    data = JSON.stringify if args[1]? then args else args[0]
     for sid, socket of app.connections
       debug 'send %s', data, sid
       socket.send data
-      
-  app.broadcast = (tag, args) ->
-    if args?
-      sendToAll JSON.stringify [tag, args]
-    else
-      sendToAll 'M' + tag
 
   # recursive directory watcher
   watch = (path, cb) ->
@@ -47,27 +42,24 @@ app.start = (appDir, port) ->
       debug 'file change', path
       unless /\.(html|jade)$/.test path
         combiner.invalidate()
-      sendToAll (if /\.(css|styl)$/.test path then 'U' else 'R')
+      socket.send not /\.(css|styl)$/.test path  # send true or false
   
   server.on 'connection', (socket) ->
     sid = socket.id
     app.connections[sid] = socket
     
-    socket.sendMessage = (msg) ->
-      socket.send msg
-    
     debug 'connect', sid
-    app.emit 'ws:connect', socket
+    app.emit 'ws:connect', sid
 
     socket.on 'message', (data) ->
       try # ignore errors
         json = JSON.parse data  if data[0] is '['
       if json
-        app.emit 'ws:request', socket, json
+        app.emit 'ws:request', sid, json
       else
-        app.emit 'ws:message', socket, data
+        app.emit 'ws:message', sid, data
 
     socket.on 'close', ->
       debug 'disconnect', sid
-      app.emit 'ws:disconnect', socket
+      app.emit 'ws:disconnect', sid
       delete app.connections[sid]

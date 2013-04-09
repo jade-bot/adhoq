@@ -1,4 +1,4 @@
-liveserver = require './liveserver'
+server = require './liveserver'
 fs = require 'fs'
 {spawn} = require 'child_process'
 
@@ -13,12 +13,12 @@ module.exports = (port = 3333) ->
       console.info '>', data
       child.send 'echo: ' + data
   
-  liveserver.start './app', port
+  server.start './app', port
   console.info "Live server listening on http://localhost:#{port}/"
   
-  liveserver.on 'ws:connect', (socket) ->
-    socket.sendMessage 'welcome'
+  server.on 'ws:connect', (sid) ->
+    server.broadcast "welcome #{sid}"
   
-  liveserver.on 'ws:message', (socket, msg) ->
-    console.log 'message:', msg
-    socket.sendMessage "echo #{msg}"
+  server.on 'ws:message', (sid, msg) ->
+    console.log "(#{sid})", msg
+    server.broadcast "echo #{msg}"

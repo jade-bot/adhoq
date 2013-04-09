@@ -29,8 +29,8 @@ dispatchIncoming = (data) ->
 # - there is only one connection, the clients need to be de-mux'ed
 setupSlaveServer = () ->
 
-  server.send = (tag, args) ->
-    process.send [tag, args]
+  server.send = (args...) ->
+    process.send args
 
   process.on 'message', dispatchIncoming
 
@@ -46,10 +46,10 @@ setupSocketServer = (port) ->
   
   server.connections = {}
 
-  server.send = (tag, args) ->    
-    data = if args then JSON.stringify [tag, args] else 'M' + tag
+  server.send = (args...) ->    
+    data = JSON.stringify if args[1]? then args else args[0]
     for sid, socket of server.connections
-      debug 'send %s', tag, sid
+      debug 'send %s', args[0], sid
       socket.send data
 
   listener.on 'connection', (socket) ->
