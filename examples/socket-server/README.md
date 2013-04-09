@@ -3,9 +3,10 @@
 Run as:
 
     component install
-    ../../bin/adhoq run
+    ../../bin/adhoq build
+    node server
     
-Then go to http://localhost:3333/
+Then open `out/`
 
 ## Notes
 
