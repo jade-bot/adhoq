@@ -4,41 +4,56 @@ jade = require 'jade'
 marked = require 'marked'
 {minify} = require 'uglify-js'
 cleancss = require 'clean-css'
-#stylus = require 'stylus'
+mkdirp = require 'mkdirp'
+path = require 'path'
 
 module.exports = (outdir = 'out') ->
-
-  fs.mkdir outdir, (err) ->
-    # ignore error, usually EEXIST
-    
-    combiner.fullBuild (js, css) ->
-      saveFile "#{outdir}/build.css", cleancss.process css
-      minified = minify js, fromString: true
-      saveFile "#{outdir}/build.js", minified.code
+  combiner.fullBuild (js, css) ->
+    if js and css
+      treeDel outdir  if fs.existsSync outdir
+      
+      cssMin = cleancss.process css
+      saveFile "#{outdir}/build.css", cssMin
+      
+      jsMin = minify js, fromString: true
+      saveFile "#{outdir}/build.js", jsMin.code
+      
       treeBuild 'app', outdir
-  
-treeBuild = (dir, out) ->        
-  for file in fs.readdirSync dir
-    path = "#{dir}/#{file}"
-    stats = fs.statSync path
-    if stats.isDirectory()
-      treeBuild path, out
     else
-      if /\.(jade|md)$/.test path
-        data = fs.readFileSync path
-        output = null
-        if /\.jade$/.test path
-          output = jade.compile(data, filename: path)()
-          path = path.replace /jade$/, 'html'
-        else if /\.md$/.test path
-          output = marked data
-          path = path.replace /md$/, 'html'
-        dest = path.replace /app/, out
-        saveFile dest, output
+      console.error 'build error'
 
-saveFile = (path, data) ->
-  if data
-    fs.writeFileSync path, data
-    console.info "  #{path} - #{Buffer.byteLength data} b"
-  else
-    console.error 'build error for %s', path
+treeDel = (dir) ->
+  for name in fs.readdirSync dir
+    src = "#{dir}/#{name}"
+    if fs.statSync(src).isDirectory()
+      treeDel src
+    else
+      fs.unlinkSync src
+  fs.rmdirSync dir
+
+# translate some file types, and copy the rest as is
+treeBuild = (dir, out) ->        
+  for name in fs.readdirSync dir
+    src = "#{dir}/#{name}"
+    if fs.statSync(src).isDirectory()
+      treeBuild src, out
+    else if /\.(jade|md)$/.test src
+      data = fs.readFileSync src, 'utf8'
+      if /\.jade$/.test src
+        data = jade.compile(data, filename: src)()
+        src = src.replace /jade$/, 'html'
+      else if /\.md$/.test src
+        data = marked data
+        src = src.replace /md$/, 'html'
+      dest = src.replace /app/, out
+      saveFile dest, data
+    else unless /\.(js|json|coffee|styl)$/.test src
+      data = fs.readFileSync src
+      dest = src.replace /app/, out
+      saveFile dest, data, data.length
+
+saveFile = (file, data, size) ->
+  size ?= Buffer.byteLength data
+  console.info "  #{file} - #{size} b"
+  mkdirp.sync path.dirname file
+  fs.writeFileSync file, data
