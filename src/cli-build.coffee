@@ -2,6 +2,7 @@ combiner = require './combiner'
 fs = require 'fs'
 jade = require 'jade'
 marked = require 'marked'
+{minify} = require 'uglify-js'
 #stylus = require 'stylus'
 
 module.exports = (outdir = 'out') ->
@@ -10,7 +11,8 @@ module.exports = (outdir = 'out') ->
     # ignore error, usually EEXIST
     
     combiner.fullBuild (js, css) ->
-      saveFile "#{outdir}/build.js", js
+      minified = minify js, fromString: true
+      saveFile "#{outdir}/build.js", minified.code
       saveFile "#{outdir}/build.css", css
       treeBuild 'app', outdir
   

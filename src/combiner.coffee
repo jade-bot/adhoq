@@ -51,9 +51,8 @@ exports.build = (type) ->
         cache.emit 'done', cache.data
 
 hash = (data) ->
-  md5 = crypto.createHash 'md5'
-  md5.update data
-  JSON.stringify md5.digest 'hex'
+  md5hex = crypto.createHash('md5').update(data).digest 'hex'
+  "'#{md5hex}'"
 
 exports.fullBuild = fullBuild = (cb) ->
   builder = new Builder('.')
