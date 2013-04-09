@@ -55,4 +55,4 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
         node server           (note that adhoq is no longer involved here)
 
   When launched using `adhoq run` for development, the server will be launched as child process, with adhoq sitting in between to handle live reloading.
-  The `server/coffee.main` startup sets itself up accordingly, using WS or IPC.
+  The `server/main` startup code sets itself up accordingly, using WS or IPC.
