@@ -13,7 +13,7 @@ program
     
 program
   .command('run [port]')
-  .description('Run the site in live preview mode')
+  .description('Run the site in live preview mode [3333]')
   .action (env) ->
     require('./cli-run') program.args...
 
@@ -24,8 +24,8 @@ program
     console.warn 'not yet'
 
 program
-  .command('build')
-  .description('Build a static version of the site')
+  .command('build [dir]')
+  .description('Build a static version of the site [out]')
   .action (env) ->
     require('./cli-build') program.args...
 

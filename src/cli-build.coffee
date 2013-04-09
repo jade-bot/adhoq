@@ -1,40 +1,37 @@
 combiner = require './combiner'
 fs = require 'fs'
 jade = require 'jade'
-stylus = require 'stylus'
 marked = require 'marked'
+#stylus = require 'stylus'
 
-OUT_DIR = 'out'
+module.exports = (outdir = 'out') ->
 
-module.exports = ->
-
-  fs.mkdir OUT_DIR, (err) ->
+  fs.mkdir outdir, (err) ->
     # ignore error, usually EEXIST
     
     combiner.fullBuild (js, css) ->
-      saveFile "#{OUT_DIR}/build.js", js
-      saveFile "#{OUT_DIR}/build.css", css
-        
-      treeBuild = (dir) ->        
-        for file in fs.readdirSync dir
-          path = "#{dir}/#{file}"
-          stats = fs.statSync path
-          if stats.isDirectory()
-            treeBuild path
-          else
-            if /\.(jade|md)$/.test path
-              data = fs.readFileSync path
-              output = null
-              if /\.jade$/.test path
-                output = jade.compile(data, filename: path)()
-                path = path.replace /jade$/, 'html'
-              else if /\.md$/.test path
-                output = marked data
-                path = path.replace /md$/, 'html'
-              dest = path.replace /app/, OUT_DIR
-              saveFile dest, output
-            
-      treeBuild 'app'
+      saveFile "#{outdir}/build.js", js
+      saveFile "#{outdir}/build.css", css
+      treeBuild 'app', outdir
+  
+treeBuild = (dir, out) ->        
+  for file in fs.readdirSync dir
+    path = "#{dir}/#{file}"
+    stats = fs.statSync path
+    if stats.isDirectory()
+      treeBuild path, out
+    else
+      if /\.(jade|md)$/.test path
+        data = fs.readFileSync path
+        output = null
+        if /\.jade$/.test path
+          output = jade.compile(data, filename: path)()
+          path = path.replace /jade$/, 'html'
+        else if /\.md$/.test path
+          output = marked data
+          path = path.replace /md$/, 'html'
+        dest = path.replace /app/, out
+        saveFile dest, output
 
 saveFile = (path, data) ->
   if data
