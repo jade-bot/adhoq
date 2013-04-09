@@ -10,7 +10,7 @@ socket.on 'message', (data) ->
   msg = data.substr 1
   switch data[0]
     when 'M'
-      console.log 'server msg:', msg
+      console.log 'server:', msg
     when 'R'
       console.log 'reload page'
       window.location.reload true
@@ -21,7 +21,7 @@ socket.on 'message', (data) ->
           href = e.href.replace /\?.*/, ''
           e.href = "#{href}?#{Date.now()}"
     else
-      socket.emit 'request', JSON.parse msg
+      socket.emit 'request', JSON.parse data
 
 delay = null  # this will be > 0 while attempting reconnects
 

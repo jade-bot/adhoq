@@ -27,7 +27,7 @@ app.start = (appDir, port) ->
       
   app.broadcast = (tag, args) ->
     if args?
-      sendToAll 'J' + JSON.stringify [tag, args]
+      sendToAll JSON.stringify [tag, args]
     else
       sendToAll 'M' + tag
 
@@ -54,7 +54,7 @@ app.start = (appDir, port) ->
     app.connections[sid] = socket
     
     socket.sendMessage = (msg) ->
-      socket.send "M#{msg}"
+      socket.send msg
     
     debug 'connect', sid
     app.emit 'ws:connect', socket
@@ -69,5 +69,5 @@ app.start = (appDir, port) ->
 
     socket.on 'close', ->
       debug 'disconnect', sid
-      app.emit 'ws:close', socket
+      app.emit 'ws:disconnect', socket
       delete app.connections[sid]
