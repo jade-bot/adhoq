@@ -6,7 +6,7 @@ Run as:
     ../../bin/adhoq build
     node server
     
-Then open `out/`
+Then open `out/index.html` in the browser.
 
 ## Notes
 
