@@ -18,6 +18,8 @@ Install [Node.js](http://nodejs.org/) 0.10.x, then:
 
     npm install -g adhoq
     adhoq --help
+
+[![NPM version](https://badge.fury.io/js/adhoq.png)](https://npmjs.org/package/adhoq)
     
 # Run tests
     
@@ -27,4 +29,4 @@ Install [Node.js](http://nodejs.org/) 0.10.x, then:
     
 # License
 
-[MIT](http://opensource.org/licenses/MIT)
+MIT
