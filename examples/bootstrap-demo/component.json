@@ -1,0 +1,5 @@
+{
+  "name": "bootstrap-demo",
+  "local": ["boot"],
+  "paths": ["app"]
+}

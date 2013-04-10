@@ -1,4 +1,4 @@
-# Combined coffee
+# Bootstrap demo
 
 Run as:
 

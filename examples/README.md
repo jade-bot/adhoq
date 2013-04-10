@@ -52,7 +52,15 @@ AdHoq is installed as global command. Otherwise, use `/path/to/adhoc run`:
   
         adhoq build           (to translate, combine, and minify the out/ area)
         open out/index.html   (on Mac, i.e. browse the site as static files)
-        node server           (note that adhoq is no longer involved here)
+        node server           (note that adhoq is no longer involved in this)
 
   When launched using `adhoq run` for development, the server will be launched as child process, with adhoq sitting in between to handle live reloading.
   The `server/main` startup code sets itself up accordingly, using WS or IPC.
+
+* **bootstrap-demo**  
+  Loads the [Bootstrap][T] CSS framework without the JavaScript, in preparation
+  for use with the AngularJS [UI Bootstrap][U]. This will remove the dependency
+  on JQuery and replaces it by AngularJS-style directives and animations.
+  
+  [T]: http://twitter.github.io/bootstrap/
+  [U]: http://angular-ui.github.io/bootstrap/

@@ -31,7 +31,7 @@ app.start = (appDir, port) ->
       debug 'file change', path
       unless /\.(html|jade)$/.test path
         combiner.invalidate()
-      socket.send not /\.(css|styl)$/.test path  # send true or false
+      app.broadcast not /\.(css|styl)$/.test path  # send true or false
   
   server.on 'connection', (socket) ->
     sid = socket.id
