@@ -1,6 +1,7 @@
 combiner = require './combiner'
 fs = require 'fs'
 jade = require 'jade'
+stylus = require 'stylus'
 marked = require 'marked'
 {minify} = require 'uglify-js'
 cleancss = require 'clean-css'
@@ -32,7 +33,8 @@ treeDel = (dir) ->
   fs.rmdirSync dir
 
 # translate some file types, and copy the rest as is
-treeBuild = (dir, out) ->        
+# also updates the pendingStylus map of .styl files to build later
+treeBuild = (dir, out) ->
   for name in fs.readdirSync dir
     src = "#{dir}/#{name}"
     if fs.statSync(src).isDirectory()
@@ -47,13 +49,20 @@ treeBuild = (dir, out) ->
         src = src.replace /md$/, 'html'
       dest = src.replace /app/, out
       saveFile dest, data
+    else if /\.styl$/.test src
+      data = fs.readFileSync src, 'utf8'
+      src = src.replace /styl$/, 'css'
+      dest = src.replace /app/, out
+      stylus.render data, { filename: src }, (err, css) ->
+        # nasty: runs async, relies on the app waiting for it to finish
+        saveFile dest, css
     else unless /\.(js|json|coffee|styl)$/.test src
       data = fs.readFileSync src
       dest = src.replace /app/, out
-      saveFile dest, data, data.length
+      saveFile dest, data
 
-saveFile = (file, data, size) ->
-  size ?= Buffer.byteLength data
-  console.info "  #{file} - #{size} b"
+saveFile = (file, data) ->
+  len = if typeof data is 'string' then Buffer.byteLength data else data.length
+  console.info "  #{file} - #{len} b"
   mkdirp.sync path.dirname file
   fs.writeFileSync file, data
