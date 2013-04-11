@@ -20,11 +20,15 @@ module.exports = (port = 3333) ->
     console.log "(#{sid})", msg
     server.broadcast "echo #{msg}"
 
+  server.on 'ws:request', (sid, msg) ->
+    console.log "(#{sid})", msg[0], msg.length
+    child?.send msg
+
 watchSlave = (dir) ->
   if fs.existsSync dir
     launchSlave dir
     
-    # send a signal to the slave server wheneever a file changes
+    # send a signal to the slave server whenever a file changes
     watch dir, (event, path) ->
       if event is 'change'
         debug 'server change', path

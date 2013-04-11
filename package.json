@@ -1,6 +1,6 @@
 {
   "name": "adhoq",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Experimental website framework",
   "author": "Jean-Claude Wippler <jc@wippler.nl>",
   "license": "MIT",
@@ -24,8 +24,8 @@
     "mkdirp": "~0.3.5"
   },
   "devDependencies": {
-    "mocha": "~1.8.2",
-    "chai": "~1.4.2",
+    "mocha": "~1.9.0",
+    "chai": "~1.5.0",
     "sinon": "~1.5.2"
   },
   "scripts": {

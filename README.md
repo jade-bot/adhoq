@@ -2,15 +2,17 @@
 
 Experimental website framework.
 
-* Simple AngularJS and Foundation demo's
-* Auto-translates CoffeeScript, Stylus, and Jade
+* AngularJS and Foundation demo's included
+* Auto-translated CoffeeScript, Stylus, and Jade
 * Client modules based on component + builder.js
-* Generates static sites with one command
-* Fully converts and minifies to JavaScript + CSS
-* Automatic live reload in the browser
+* Generate static sites with one command
+* Fully convert and minify to JavaScript + CSS
+* Live reload without intermediate files
 * Generated .js and .css are cached via ETags
 * Optional WebSocket server for dynamic content
 * Server-side live reloads without browser restart
+
+[![Dependency Status](https://gemnasium.com/jcw/adhoq.png)](https://gemnasium.com/jcw/adhoq)
 
 # Install
 
@@ -20,7 +22,7 @@ Install [Node.js](http://nodejs.org/) 0.10.x, then:
     adhoq --help
 
 [![NPM version](https://badge.fury.io/js/adhoq.png)](https://npmjs.org/package/adhoq)
-    
+
 # Run tests
     
     npm test
