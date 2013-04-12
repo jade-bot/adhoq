@@ -14,7 +14,7 @@ Experimental website framework.
 
 [![Dependency Status](https://gemnasium.com/jcw/adhoq.png)](https://gemnasium.com/jcw/adhoq)
 
-# Install
+## Install
 
 Install [Node.js](http://nodejs.org/) 0.10.x, then:
 
@@ -23,12 +23,12 @@ Install [Node.js](http://nodejs.org/) 0.10.x, then:
 
 [![NPM version](https://badge.fury.io/js/adhoq.png)](https://npmjs.org/package/adhoq)
 
-# Run tests
+## Run tests
     
     npm test
 
 [![Build Status](https://secure.travis-ci.org/jcw/adhoq.png)](http://travis-ci.org/jcw/adhoq)
     
-# License
+## License
 
 MIT
